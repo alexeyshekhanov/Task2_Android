@@ -2,6 +2,7 @@ package com.example.layouttest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -12,7 +13,33 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = ItemCartAdapter(generateList())
+        val listOfPurchases = generateList()
+        recyclerView.adapter = ItemCartAdapter(listOfPurchases)
+
+        val shippingCost = 3500.0
+
+        var currentTextView  = findViewById<TextView>(R.id.shippingCost)
+        currentTextView.setText(String.format("%.2f", shippingCost))
+
+        currentTextView  = findViewById<TextView>(R.id.subtotalCost)
+        var subtotal = 0.0
+        var itemsInCart = 0
+        for (item in listOfPurchases) {
+            subtotal += item.price * item.quantity
+            itemsInCart += item.quantity
+
+        }
+        currentTextView.setText(String.format("%.2f", subtotal))
+
+        findViewById<TextView>(R.id.taxCost).setText(String.format("%.2f", subtotal * 0.12))
+        //String.format("%.3f", x)
+
+        findViewById<TextView>(R.id.totalCost).setText(String.format("%.2f", subtotal + shippingCost))
+
+
+        findViewById<TextView>(R.id.textViewAtTop).setText(String.format("%d items in your cart", itemsInCart))
+
+
 
     }
     private fun generateList(): List<ItemCart> =
