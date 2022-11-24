@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = ItemCartAdapter(generateList())
 
     }
-
     private fun generateList(): List<ItemCart> =
         listOf(
             ItemCart(
